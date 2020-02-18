@@ -410,7 +410,7 @@ class Tags {
         }else{
             const lon=_options.position.longitude||_options.position.lon||_options.position.x||_options.position[0];
             const lat=_options.position.latitude||_options.position.lat||_options.position.y||_options.position[1];
-            const height=_options.position.alt||_options.position.height||_options.position.z||_options.position[2]||0;
+            const height=_options.position.height||_options.position.height||_options.position.z||_options.position[2]||0;
             entity={
                 position:Cesium.Cartesian3.fromDegrees(lon,lat,height),
                 label:_options.label,

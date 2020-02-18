@@ -2,6 +2,7 @@ import {Cesium} from "./Unit.js";
 import widgets from "cesium/Widgets/widgets.css";
 import {viewer} from "./Viewer";
 let handler;
+let entityList=[];
 class Measure {
     static get handler () {
         return handler;
@@ -10,7 +11,6 @@ class Measure {
     static set handler (_handler) {
         handler = _handler;
     }
-
     static measureLineSpace () {
         const _this = this;
         console.log(_this.handler)
@@ -84,6 +84,7 @@ class Measure {
                     pixelOffset: new Cesium.Cartesian2(20, -20),
                 }
             });
+            entityList.push(floatingPoint);
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
         _this.handler.setInputAction(function (movement) {
@@ -118,7 +119,8 @@ class Measure {
                 };
                 //实时更新polyline.positions
                 this.options.polyline.positions = new Cesium.CallbackProperty(_update, false);
-                viewer.entities.add(this.options);
+                var polyline = viewer.entities.add(this.options);
+                entityList.push(polyline);
             };
 
             return _;
@@ -212,6 +214,7 @@ class Measure {
                     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
                 }
             });
+            entityList.push(floatingPoint);
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
         _this.handler.setInputAction(function (movement) {
@@ -229,7 +232,7 @@ class Measure {
             // tempPoints.push({ lon: longitudeString, lat: latitudeString ,hei:heightString});
 
             var textArea = getArea(tempPoints) + "平方公里";
-            viewer.entities.add({
+            var label = viewer.entities.add({
                 name: '多边形面积',
                 position: positions[positions.length - 1],
                 // point : {
@@ -250,6 +253,7 @@ class Measure {
                     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
                 }
             });
+            entityList.push(label);
         }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 
         var radiansPerDegree = Math.PI / 180.0;//角度转化为弧度(rad)
@@ -325,7 +329,8 @@ class Measure {
                 };
                 //实时更新polygon.hierarchy
                 this.options.polygon.hierarchy = new Cesium.CallbackProperty(_update, false);
-                viewer.entities.add(this.options);
+                var polygon = viewer.entities.add(this.options);
+                entityList.push(polygon)
             };
 
             return _;
@@ -342,6 +347,16 @@ class Measure {
             //返回两点之间的距离
             s = Math.sqrt(Math.pow(s, 2) + Math.pow(point2cartographic.height - point1cartographic.height, 2));
             return s;
+        }
+    }
+
+    static deleteAll(){
+        if(entityList.length>0){
+            for(var i=0;i<entityList.length;i++){
+                var entity=entityList[i];
+                viewer.entities.remove(entity);
+            }
+            entityList=[];
         }
     }
 

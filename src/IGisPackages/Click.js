@@ -31,10 +31,45 @@ class ScreenSpaceEventHandler {
                fn();
            } else if (type === ScreenSpaceEventType.MOUSE_MOVE) {
                const picked = viewer.scene.pick(movement.endPosition);
-               fn(picked);
+            //    const position=viewer.scene.pickPosition(movement.endPosition);
+               const position = viewer.scene.camera.pickEllipsoid(movement.endPosition, viewer.scene.globe.ellipsoid);
+               let obj=null
+               if(picked==undefined){
+                obj={
+                    pickedPosition:position,
+                    pickedEntity:undefined,
+                    picked:undefined
+                }
+               }else{
+                 obj={
+                    pickedPosition:position,
+                    pickedEntity:picked.id,
+                    picked:picked.primitive._position
+                }
+               }
+
+
+               fn(obj);
            } else {
                const picked = viewer.scene.pick(movement.position);
-               fn(picked);
+            //    const position=viewer.scene.pickPosition(movement.position);
+               const position = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
+               let obj=null
+               if(picked==undefined){
+                obj={
+                    pickedPosition:position,
+                    pickedEntity:undefined,
+                    pickedPoint:undefined
+                }
+               }else{
+                 obj={
+                    pickedPosition:position,
+                    pickedEntity:picked.id,
+                    picked:picked.primitive._position
+                }
+               }
+              
+               fn(obj);
                // if (Cesium.defined(picked)) {
                //     // console.log(picked);
                //     fn(picked.id);

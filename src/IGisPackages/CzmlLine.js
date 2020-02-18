@@ -267,13 +267,7 @@ class CzmlLine {
                     _this._scanOptions.duration=scanOptions.duration;
                 }
             }
-            viewer.entities.add({
-                position : Cesium.Cartesian3.fromDegrees(positions[1],positions[2]),
-                point : {
-                    pixelSize : 10,
-                    color : Cesium.Color.YELLOW
-                }
-            });
+
             _this.scan=Scan.add([positions[1],positions[2],positions[3]],_this._scanOptions)
 
         }
@@ -332,12 +326,13 @@ class CzmlLine {
                     }
                 }
                 index++;
-                if (index >= time*1000) {
-                    clearInterval(interval);
+                if (index >= time*10) {                 
+                    clearInterval(interval);                   
                 }
-            }, 1)
+            }, 100)
 
         }
+      
         const lon=position[0]||position.x||position.lon;
        const lat=position[1]||position.y||position.lat;
        const height=position[2]||position.z||position.alt||0;

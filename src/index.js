@@ -36,6 +36,7 @@ import {VideoPlane} from "./IGisPackages/VideoPlane.js";
 import {ScreenSpaceEventHandler} from "./IGisPackages/Click.js";
 
 import {DrawGraphicalHelper} from "./IGisPackages/DrawGraphicalHelper.js";
+import {DrawGraphical} from "./IGisPackages/DrawGraphical.js";
 
 import {WMTSImageProvider,WMSImageProvider} from "./IGisPackages/WebMapServiceImageryProvider.js"
 let IGis = {
@@ -125,6 +126,8 @@ let IGis = {
     Math:Math,
     Ellipsoid:Ellipsoid,
     BoundingSphere:BoundingSphere,
+
+    DrawGraphical:DrawGraphical
 };
 
 

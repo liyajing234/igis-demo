@@ -136,6 +136,7 @@ class Viewer {
             });
         }
         _this.viewer.scene.fxaa = true;
+        _this.viewer.entities.removeAll();
         _this.viewer.scene.postProcessStages.fxaa.enabled = true;
         //取消双击事件
         _this.viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);

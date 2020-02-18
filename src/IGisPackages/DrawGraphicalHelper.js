@@ -1,9 +1,5 @@
 import {Cesium} from "./Unit";
 import {viewer} from "./Viewer";
-import el from "element-ui/src/locale/lang/el";
-import de from "element-ui/src/locale/lang/de";
-import en from "element-ui/src/locale/lang/en";
-import {eachBefore} from "echarts/src/chart/tree/traversalHelper";
 
 var handler = null;
 var activeShapePoints = [];
@@ -168,7 +164,7 @@ class DrawGraphicalHelper {
                 // _this.createPoint(earthPosition);
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-//鼠标移动
+         //鼠标移动
         _this.handler.setInputAction(function (event) {
             if (Cesium.defined(floatingPoint)) {
                 var newPosition = viewer.scene.camera.pickEllipsoid(event.endPosition, viewer.scene.globe.ellipsoid);
@@ -383,33 +379,37 @@ class DrawGraphicalHelper {
 
     static deletePolygon (classify, value) {
         const _this = this;
+        let polygonList2=_this.polygonList;
         if (typeof classify !== "undefined") {
             if (classify === "id") {
                 if (value !== undefined) {
-                    for (let i = 0; i < _this.polygonList.length; i++) {
-                        let poly = _this.polygonList[i];
+                    for (let i = 0; i < polygonList2.length; i++) {
+                        let poly = polygonList2[i];
                         if (poly.id == value) {
                             viewer.entities.remove(poly);
+                            _this.polygonList.splice(i,1);
                         }
                     }
                 }
             } else if (classify === "name") {
                 if (value !== undefined) {
-                    for (let i = 0; i < _this.polygonList.length; i++) {
-                        let poly = _this.polygonList[i];
+                    for (let i = 0; i < polygonList2.length; i++) {
+                        let poly = polygonList2[i];
 
                         if (poly.name == value) {
                             viewer.entities.remove(poly);
+                            _this.polygonList.splice(i,1);
                         }
                     }
                 }
             } else if (classify === "type") {
                 if (value !== undefined) {
-                    for (let i = 0; i < _this.polygonList.length; i++) {
-                        let poly = _this.polygonList[i];
+                    for (let i = 0; i < polygonList2.length; i++) {
+                        let poly = polygonList2[i];
                         if (poly.type !== undefined) {
                             if (poly.type == value) {
                                 viewer.entities.remove(poly);
+                                _this.polygonList.splice(i,1);
                             }
                         }
 
@@ -418,15 +418,14 @@ class DrawGraphicalHelper {
             }
 
         } else {
-            if (_this.polygonList.length > 0) {
-                for (let i = 0; i < _this.polygonList.length; i++) {
-                    let poly = _this.polygonList[i];
+            if (polygonList2.length > 0) {
+                for (let i = 0; i <polygonList2.length; i++) {
+                    let poly = polygonList2[i];
                     viewer.entities.remove(poly);
+                   
                 }
+                _this.polygonList=[];
             }
-        }
-        if (typeof polygon != "undefined") {
-            viewer.entities.remove(entity);
         }
     }
 

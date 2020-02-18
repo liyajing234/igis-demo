@@ -52,6 +52,7 @@ class PositionMessage {
         let handler = new Cesium.ScreenSpaceEventHandler(_this.viewer.scene.canvas);
         handler.setInputAction(function (move) {
             //苗卡尔 二维平面坐标 转 苗卡尔椭球体的三维坐标 返回球体表面的点
+            // let cartesian = _this.viewer.scene.pickPosition(move.endPosition);
             let cartesian = _this.viewer.camera.pickEllipsoid(move.endPosition, ellipsoid);
             if (cartesian) {
                 // 苗卡尔椭球体的三维坐标 转 地图坐标（弧度）

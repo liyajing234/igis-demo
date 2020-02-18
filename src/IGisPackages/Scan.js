@@ -1,8 +1,9 @@
 import {viewer} from "./Viewer.js";
 import {Cesium} from "./Unit.js";
 import {Point,Label}  from "./Tags.js";
-const scanList=[];
-const scanTagList=[];
+let scanList=[];
+let scanTagList=[];
+let scanCenter=null;
 class Scan {
     constructor (){
     }
@@ -14,6 +15,12 @@ class Scan {
     }
     static set scanList(scan){
         scanList.push(scan);
+    }
+    static get scanCenter(){
+        return scanCenter;
+    }
+    static set scanCenter(_scanCenter){
+        scanCenter=_scanCenter;
     }
     /**
      * 添加雷达扫描
